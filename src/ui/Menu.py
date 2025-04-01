@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk
 from utils.ImageProcessor import ImageProcessor
+from utils.Mirror import Mirror
 
 class Menu:
     def __init__(self, root):
@@ -72,11 +73,19 @@ class Menu:
             self.display_image()
             
         #teste abaixo de imageprocessor para verificar se esta pegando pixels da imagem
-        if self.img:
-            img_processor = ImageProcessor(self.img)
-            print("uma imagem foi aberta")
-            print("\n\nPixels da imagem: \n")
-            print(img_processor.get_pixels()[:5])
+        # if self.img:
+        #     img_processor = ImageProcessor(self.img)
+        #     img_mirror = Mirror(self.img)
+        #     print("uma imagem foi aberta")
+        #     print("\n\nPixels da imagem através da classe Mirror: \n")
+        #     print(img_mirror.mirror())
+            
+        # if self.img:
+        #     img_processor = ImageProcessor(self.img)
+        #     print("uma imagem foi aberta")
+        #     print("\n\nPixels da imagem através da classe ImageProccesor: \n")
+        #     print(img_processor.get_pixels()[:5])
+            
             
     def save_image(self):
         if self.img:
@@ -104,6 +113,12 @@ class Menu:
 
     def mirror(self):
         print("Espelhamento...")
+        
+        mirror = Mirror(self.img)
+        self.img = mirror.mirror()
+        self.display_image()
+        
+        print("Concluído espelhamento")
 
     def zoom_in(self):
         print("Aumentando...")
