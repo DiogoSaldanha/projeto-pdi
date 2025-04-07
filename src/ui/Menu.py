@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 from utils.ImageProcessor import ImageProcessor
 from utils.Mirror import Mirror
 from utils.Rotation import Rotation
+from utils.Translation import Translation
 
 class Menu:
     def __init__(self, root):
@@ -108,6 +109,13 @@ class Menu:
         
     def translate(self):
         print("Translação...")
+        
+        translation = Translation(self.img)
+        self.img = translation.translate(10,10) #Exemplo com pixels de valor fixo
+        self.display_image()
+        
+        print("Concluído translação")
+        
 
     def rotate(self):
         print("Rotação...")

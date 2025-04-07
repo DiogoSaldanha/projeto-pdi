@@ -34,7 +34,7 @@ class Rotation:
                 
                 #Se a posição nova está dentro dos limites da imagem original, pega o valor do pixel
                 if 0 <= x_rotated < width and 0 <= y_rotated < height:
-                    index = y_rotated * width + x_rotated  # Eu tenho que converter (x_rotated, y_rotated) pra um indice de 1D por que pixels é uma lista e não tupla.
+                    index = y_rotated * width + x_rotated  # Eu tenho que converter (x_rotated, y_rotated) pra um indice de 1D por que pixels é uma lista e não tupla, por causa do funcionamento de lib do Pillow
                     modifiedPixels.append(pixels[index])  # Pega o pixel naquele indice
                 else:
                     # Se a posição tá fora do limite pinto o background de alguma cor
