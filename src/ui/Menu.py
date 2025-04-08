@@ -2,9 +2,9 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk
 from utils.ImageProcessor import ImageProcessor
-from utils.Mirror import Mirror
-from utils.Rotation import Rotation
-from utils.Translation import Translation
+from utils.GeometricTransformations.Mirror import Mirror
+from utils.GeometricTransformations.Rotation import Rotation
+from utils.GeometricTransformations.Translation import Translation
 
 class Menu:
     def __init__(self, root):
