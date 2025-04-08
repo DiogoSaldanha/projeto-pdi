@@ -5,6 +5,7 @@ from utils.ImageProcessor import ImageProcessor
 from utils.GeometricTransformations.Mirror import Mirror
 from utils.GeometricTransformations.Rotation import Rotation
 from utils.GeometricTransformations.Translation import Translation
+from utils.GeometricTransformations.Scale import Scale
 
 class Menu:
     def __init__(self, root):
@@ -137,9 +138,21 @@ class Menu:
 
     def zoom_in(self):
         print("Aumentando...")
+        
+        scale = Scale(self.img)
+        self.img = scale.zoom(1.5)
+        self.display_image()
+        
+        print("Concluído aumentar")
 
     def zoom_out(self):
         print("Diminuindo...")
+        
+        scale = Scale(self.img)
+        self.img = scale.zoom(0.5)
+        self.display_image()
+        
+        print("Concluído diminuir")
         
     def grayscale(self):
         print("Grayscale...")
