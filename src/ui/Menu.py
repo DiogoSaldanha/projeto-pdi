@@ -6,6 +6,7 @@ from utils.GeometricTransformations.Mirror import Mirror
 from utils.GeometricTransformations.Rotation import Rotation
 from utils.GeometricTransformations.Translation import Translation
 from utils.GeometricTransformations.Scale import Scale
+from utils.Filters.Grayscale import Grayscale
 
 class Menu:
     def __init__(self, root):
@@ -156,6 +157,12 @@ class Menu:
         
     def grayscale(self):
         print("Grayscale...")
+        
+        grayscale = Grayscale(self.img)
+        self.img = grayscale.grayscale()
+        self.display_image()
+        
+        print("Concluído grayscale")
         
     def low_pass(self):
         print("Passa baixa...")

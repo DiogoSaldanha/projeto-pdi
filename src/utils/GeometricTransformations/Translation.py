@@ -1,5 +1,4 @@
 from utils.ImageProcessor import ImageProcessor
-import math
 
 # Rotação apresenta um pequeno erro ao mostrar a imagem na GUI, ajustar isso depois
 class Translation:
