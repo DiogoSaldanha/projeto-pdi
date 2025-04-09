@@ -14,8 +14,8 @@ class Translation:
         modifiedPixels = []
         
         #Modificar aqui para testes:
-        x_translation = 1
-        y_translation = 1
+        x_translation = 20
+        y_translation = 20
         
         for y in range(height):
             for x in range(width):
@@ -24,10 +24,12 @@ class Translation:
                 y_modified = y + y_translation
                 
                 #checa se a nova posição está nos limites da imagem
-                if 0 <= x_modified < width and 0 <= y_modified <= height:
+                if 0 <= x_modified < width and 0 <= y_modified < height:
                     #se sim, pega o pixel naquela posição e append na lista
-                    index = y * width + x
+                    index = y_modified * width + x_modified
                     modifiedPixels.append(pixels[index])
+                else:
+                    modifiedPixels.append((0,0,0))
         
         
         self.modifiedImage.set_pixels(modifiedPixels)
