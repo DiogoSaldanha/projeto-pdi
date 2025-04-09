@@ -12,8 +12,8 @@ class Rotation:
         width = self.image.width
         height = self.image.height
         
-        #Ãngulo desejado, começar com 45 graus e transformando em radianos pra poder trabalhar com cos() e sin()
-        angle_of_rotation = 45
+        #Ãngulo desejado e transformando em radianos pra poder trabalhar com cos() e sin()
+        angle_of_rotation = 90
         angle_rad = math.radians(angle_of_rotation)
         
         #Centro da imagem

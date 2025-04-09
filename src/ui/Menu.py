@@ -40,6 +40,7 @@ class Menu:
         #Menu de Filtros
         filter_menu = tk.Menu(self.menu_bar, tearoff=0)
         filter_menu.add_command(label="Grayscale", command=self.grayscale)
+        filter_menu.add_command(label="Brilho", command=self.brightness)
         filter_menu.add_command(label="Passa Baixa", command=self.low_pass)
         filter_menu.add_command(label="Passa Alta", command=self.high_pass)
         filter_menu.add_command(label="Threshold", command=self.threshold)
@@ -163,6 +164,9 @@ class Menu:
         self.display_image()
         
         print("Concluído grayscale")
+        
+    def brightness(self):
+        print("Brilho...")
         
     def low_pass(self):
         print("Passa baixa...")
