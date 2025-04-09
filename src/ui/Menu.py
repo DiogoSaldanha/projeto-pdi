@@ -115,7 +115,7 @@ class Menu:
         print("Translação...")
         
         translation = Translation(self.img)
-        self.img = translation.translate(10,10) #Exemplo com pixels de valor fixo
+        self.img = translation.translate() #Exemplo com pixels de valor fixo
         self.display_image()
         
         print("Concluído translação")
