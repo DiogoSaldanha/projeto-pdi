@@ -11,6 +11,7 @@ class Mirror:
         pixels = self.modifiedImage.get_pixels()
         width = self.image.width
         height = self.image.height
+        vertical = False #Mudar para testes
         
         modifiedPixels = []
         
@@ -24,6 +25,10 @@ class Mirror:
                 newRow.append(mirroredPixel)
                 
             modifiedPixels.extend(newRow)
+            
+        #Ativa o espelhamento na vertical
+        if vertical:
+            modifiedPixels = modifiedPixels[::-1]
             
         
         self.modifiedImage.set_pixels(modifiedPixels)
