@@ -7,6 +7,7 @@ from utils.GeometricTransformations.Rotation import Rotation
 from utils.GeometricTransformations.Translation import Translation
 from utils.GeometricTransformations.Scale import Scale
 from utils.Filters.Grayscale import Grayscale
+from utils.Filters.Brightness import Brightness
 
 class Menu:
     def __init__(self, root):
@@ -167,6 +168,12 @@ class Menu:
         
     def brightness(self):
         print("Brilho...")
+        
+        brightness = Brightness(self.img)
+        self.img = brightness.brightness()
+        self.display_image()
+        
+        print("Concluído brilho e contraste")
         
     def low_pass(self):
         print("Passa baixa...")
