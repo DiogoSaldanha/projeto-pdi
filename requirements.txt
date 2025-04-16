@@ -1,3 +1,16 @@
-#rodar um pip install -r requirements.txt para ter as dependências necessárias
-Pillow==8.3.1
-tk
+# Pillow é necessário para processar imagens e pixels
+Pillow>=8.3.1
+
+# Tkinter é parte da lib padrão do Python.
+# Já vem pré-instalado junto com o Python, mas as vezes precisa ser instalado manualmente, dependendo do seu Sistema Operacional.
+
+#Para instalar manualmente o TK no Linux:
+
+# Ubuntu/Debian:
+# sudo apt install python3-tk
+
+# Fedora:
+# sudo dnf install python3-tkinter
+
+# Arch:
+# sudo pacman -S tk
