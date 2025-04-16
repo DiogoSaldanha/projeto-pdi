@@ -12,8 +12,8 @@ class Brightness:
         modifiedPixels = []
         
         #Aplicando valores de contraste e brilho para testes
-        contrast = 1 #Para diminuir o constraste, apenas valores entre 0 e 1. Aumentar maior que 1
-        brightness = 0
+        contrast = 0.5 #Para diminuir o constraste, apenas valores entre 0 e 1. Aumentar maior que 1
+        brightness = 40
         
         for y in range(height):
             for x in range(width):
