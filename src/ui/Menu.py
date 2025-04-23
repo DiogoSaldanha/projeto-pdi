@@ -63,6 +63,11 @@ class Menu:
         extraction_menu.add_command(label="DESAFIO", command=self.challenge)
         self.menu_bar.add_cascade(label="Extração de Características", menu=extraction_menu)
         
+        #Opção voltar imagem original
+        original_image_menu = tk.Menu(self.menu_bar,tearoff=0)
+        original_image_menu.add_command(label="Voltar à Imagem Original", command=self.showOriginalImage)
+        self.menu_bar.add_cascade(label="Voltar à Imagem Original", menu=original_image_menu)
+        
         #Setando o menu bar pra root window
         self.root.config(menu=self.menu_bar)
         
@@ -205,3 +210,7 @@ class Menu:
         
     def challenge(self):
         print("Desafio...")
+        
+    def showOriginalImage(self):
+        #Para concluir aqui, tenho que mudar a lógica da classe Menu quando eu for adicionar as duas imagens juntas
+        print("Imagem original setada com sucesso")
