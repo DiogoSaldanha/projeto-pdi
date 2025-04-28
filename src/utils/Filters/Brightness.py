@@ -12,8 +12,11 @@ class Brightness:
         modifiedPixels = []
         
         #Aplicando valores de contraste e brilho para testes
-        contrast = 0.5 #Para diminuir o constraste, apenas valores entre 0 e 1. Aumentar maior que 1
-        brightness = 40
+        contrast = 1.5 #Para diminuir o constraste, apenas valores entre 0 e 1. Aumentar maior que 1
+        brightness = 0 #Aumentar ou diminuir contraste (0 não muda nada)
+        
+        # Para ajudar no cálculo do contraste
+        translationValue = 128 * (1 - contrast)
         
         for y in range(height):
             for x in range(width):
@@ -22,9 +25,9 @@ class Brightness:
                 r, g, b = pixels[index]
                 
                 if contrast != 1:
-                    r = int(r * contrast)
-                    g = int(g * contrast)
-                    b = int(b * contrast)
+                    r = int(r * contrast + translationValue)
+                    g = int(g * contrast + translationValue)
+                    b = int(b * contrast + translationValue)
                     
                 if brightness != 0:
                     r = int(r + brightness)
