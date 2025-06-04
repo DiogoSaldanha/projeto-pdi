@@ -9,6 +9,7 @@ from utils.GeometricTransformations.Scale import Scale
 from utils.Filters.Grayscale import Grayscale
 from utils.Filters.Brightness import Brightness
 from utils.Filters.LowPass import LowPass
+from utils.Filters.HighPass import HighPass
 
 class Menu:
     def __init__(self, root):
@@ -188,10 +189,16 @@ class Menu:
         self.img = lowPass.low_pass()
         self.display_image()
         
-        print("Concluído passa baixa")
+        print("Concluído Passa Baixa")
         
     def high_pass(self):
         print("Passa alta...")
+        
+        highPass = HighPass(self.img)
+        self.img = highPass.high_pass()
+        self.display_image()
+        
+        print("Concluído Passa Alta")
         
     def threshold(self):
         print("Threshold...")
