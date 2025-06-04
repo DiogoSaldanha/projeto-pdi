@@ -10,6 +10,7 @@ from utils.Filters.Grayscale import Grayscale
 from utils.Filters.Brightness import Brightness
 from utils.Filters.LowPass import LowPass
 from utils.Filters.HighPass import HighPass
+from utils.Filters.Threshold import Threshold
 
 class Menu:
     def __init__(self, root):
@@ -212,10 +213,17 @@ class Menu:
         self.img = highPass.high_pass()
         self.display_image()
         
-        print("Concluído Passa Alta")
+        print("Concluído Passa Alta (Sobel)")
         
     def threshold(self):
-        print("Threshold...")
+        if self.img:
+            value = simpledialog.askinteger("Threshold", "Digite o valor do threshold (0 a 255):", minvalue=0, maxvalue=255)
+            if value is not None:
+                print(f"Aplicando Threshold com valor {value}...")
+                threshold_filter = Threshold(self.img)
+                self.img = threshold_filter.threshold(value)
+                self.display_image()
+                print("Concluído Threshold")
         
     def dilatation(self):
         print("Dilatação...")
