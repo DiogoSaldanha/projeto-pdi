@@ -169,22 +169,32 @@ class Menu:
         print("Concluído espelhamento")
 
     def zoom_in(self):
-        print("Aumentando...")
-        
-        scale = Scale(self.img)
-        self.img = scale.zoom(1.5)
-        self.display_image()
-        
-        print("Concluído aumentar")
+        if not self.img:
+            messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
+            return
+
+        scaling_factor = simpledialog.askfloat("Zoom In", "Digite o fator de aumento (ex: 1.2, 1.5, 2.0):", minvalue=1.01, maxvalue=5.0)
+
+        if scaling_factor:
+            print(f"Aumentando com fator {scaling_factor}...")
+            scale = Scale(self.img)
+            self.img = scale.zoom(scaling_factor)
+            self.display_image()
+            print("Concluído aumentar")
 
     def zoom_out(self):
-        print("Diminuindo...")
-        
-        scale = Scale(self.img)
-        self.img = scale.zoom(0.5)
-        self.display_image()
-        
-        print("Concluído diminuir")
+        if not self.img:
+            messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
+            return
+
+        factor = simpledialog.askfloat("Zoom Out", "Digite o fator de redução (ex: 0.5, 0.8):", minvalue=0.1, maxvalue=0.99)
+
+        if factor:
+            print(f"Diminuindo com fator {factor}...")
+            scale = Scale(self.img)
+            self.img = scale.zoom(factor)
+            self.display_image()
+            print("Concluído diminuir")
         
     def grayscale(self):
         print("Grayscale...")
