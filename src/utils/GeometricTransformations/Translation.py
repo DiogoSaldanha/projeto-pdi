@@ -7,15 +7,11 @@ class Translation:
         self.modifiedImage = ImageProcessor(image)
         
     #Recebe como parametro a quantidade de pixels que quer mexer na imagem, em abos os eixos    
-    def translate(self):
+    def translate(self, x_translation, y_translation):
         pixels = self.modifiedImage.get_pixels()
         width = self.image.width
         height = self.image.height
         modifiedPixels = []
-        
-        #Modificar aqui para testes:
-        x_translation = 20
-        y_translation = 20
         
         for y in range(height):
             for x in range(width):

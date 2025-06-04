@@ -79,7 +79,8 @@ class Menu:
         
         
     def open_image(self):
-        filepath = filedialog.askopenfilename(filetypes=[("Image Files", "*.png;*.jpg;*.jpeg;*.bmp")])
+        #filepath = filedialog.askopenfilename(filetypes=[("Image Files", "*.png;*.jpg;*.jpeg;*.bmp")])
+        filepath = filedialog.askopenfilename()
         
         if filepath:
             self.img = Image.open(filepath)
@@ -120,13 +121,19 @@ class Menu:
         self.root.quit()
         
     def translate(self):
-        print("Translação...")
-        
-        translation = Translation(self.img)
-        self.img = translation.translate() #Exemplo com pixels de valor fixo
-        self.display_image()
-        
-        print("Concluído translação")
+        if not self.img:
+            messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
+            return
+
+        x_translation = simpledialog.askinteger("Translação", "Digite o deslocamento em X:", minvalue=-self.img.width, maxvalue=self.img.width)
+        y_translation = simpledialog.askinteger("Translação", "Digite o deslocamento em Y:", minvalue=-self.img.height, maxvalue=self.img.height)
+
+        if x_translation is not None and y_translation is not None:
+            print(f"Translação em X: {x_translation}, Y: {y_translation}")
+            translation = Translation(self.img)
+            self.img = translation.translate(x_translation, y_translation)
+            self.display_image()
+            print("Concluído translação")
         
 
     def rotate(self):
