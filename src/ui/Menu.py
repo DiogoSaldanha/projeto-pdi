@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog, messagebox, simpledialog
 from PIL import Image, ImageTk
 from utils.ImageProcessor import ImageProcessor
 from utils.GeometricTransformations.Mirror import Mirror
@@ -131,11 +131,18 @@ class Menu:
     def rotate(self):
         print("Rotação...")
         
-        rotation = Rotation(self.img)
-        self.img = rotation.rotate()
-        self.display_image()
+        if not self.img:
+            messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
+            return
         
-        print("Concluído rotação")
+        angle = simpledialog.askinteger("Rotacionar Imagem", "Digite o ângulo de rotação em graus: ", minvalue=0, maxvalue=360)
+        
+        if angle is not None:
+            print(f"Rotacionando em {angle} graus...")
+            rotation = Rotation(self.img)
+            self.img = rotation.rotate(angle)
+            self.display_image()
+            print("Concluído rotação")
 
     def mirror(self):
         print("Espelhamento...")

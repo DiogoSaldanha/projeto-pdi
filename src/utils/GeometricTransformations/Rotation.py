@@ -2,18 +2,18 @@ from utils.ImageProcessor import ImageProcessor
 import math
 
 # Rotação apresenta um pequeno erro ao mostrar a imagem na GUI, ajustar isso depois
+#Com essa nova implementação, ao usar valores como 360 temos uma pequena perda de pixels na imagem por lagum motivo. Verificar obug.
 class Rotation:
     def __init__(self, image):
         self.image = image
         self.modifiedImage = ImageProcessor(image)
         
-    def rotate(self):
+    def rotate(self, angle_of_rotation):
         pixels = self.modifiedImage.get_pixels()
         width = self.image.width
         height = self.image.height
         
-        #Ãngulo desejado e transformando em radianos pra poder trabalhar com cos() e sin()
-        angle_of_rotation = 90
+        #Transformando o ângulo desejado pelo usuário em radianos pra poder trabalhar com cos() e sin()
         angle_rad = math.radians(angle_of_rotation)
         
         #Centro da imagem
