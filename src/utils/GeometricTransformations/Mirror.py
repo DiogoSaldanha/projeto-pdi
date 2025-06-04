@@ -7,11 +7,10 @@ class Mirror:
         self.modifiedImage = ImageProcessor(image) #crio uma copia da imagem original para poder modificar
         
         
-    def mirror(self):
+    def mirror(self, vertical):
         pixels = self.modifiedImage.get_pixels()
         width = self.image.width
         height = self.image.height
-        vertical = False #Mudar para testes
         
         modifiedPixels = []
         

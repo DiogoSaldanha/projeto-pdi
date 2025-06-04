@@ -140,8 +140,15 @@ class Menu:
     def mirror(self):
         print("Espelhamento...")
         
+        if not self.img:
+            messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
+            return
+        
+        # Pergunta ao usuário se deseja espelhamento vertical
+        answer = messagebox.askyesno("Tipo de Espelhamento", "Você deseja aplicar espelhamento vertical? \n('Sim' para Espelhamento Vertical, 'Não' para Espelhamento Horizontal)")
+        
         mirror = Mirror(self.img)
-        self.img = mirror.mirror()
+        self.img = mirror.mirror(answer)
         self.display_image()
         
         print("Concluído espelhamento")
