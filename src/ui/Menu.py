@@ -18,7 +18,8 @@ class Menu:
         self.root = root
         self.root.title("Processamento Digital de Imagens - Diogo Schaan Saldanha")
         self.root.geometry("800x700")
-        self.img = None
+        self.original_img = None
+        self.modified_img = None
         
         #cria menu bar
         self.menu_bar = tk.Menu(self.root)
@@ -74,17 +75,20 @@ class Menu:
         self.root.config(menu=self.menu_bar)
         
         #Área pra mostrar a imagem, estudar melhor label pra centralizar dps etc
-        self.label_img = tk.Label(self.root)
-        self.label_img.pack(pady=200, anchor="center") #Não sei se o pady pode atrapalhar o display da imagem pós algoritmos
+        self.original_img_label = tk.Label(self.root)
+        self.original_img_label.pack(side=tk.LEFT, padx=20) #Não sei se o pady pode atrapalhar o display da imagem pós algoritmos
         
+        self.modified_img_label = tk.Label(self.root)
+        self.modified_img_label.pack(side=tk.RIGHT, padx=20)
         
     def open_image(self):
-        #filepath = filedialog.askopenfilename(filetypes=[("Image Files", "*.png;*.jpg;*.jpeg;*.bmp")])
-        filepath = filedialog.askopenfilename()
+        filepath = filedialog.askopenfilename(filetypes=[("Image Files", "*.png;*.jpg;*.jpeg;*.bmp")])
+        #filepath = filedialog.askopenfilename()
         
         if filepath:
-            self.img = Image.open(filepath)
-            self.img.thumbnail((400,400))
+            self.original_img = Image.open(filepath)
+            self.original_img.thumbnail((400,400))
+            self.modified_img = self.original_img.copy()
             self.display_image()
             
         #teste abaixo de imageprocessor para verificar se esta pegando pixels da imagem
@@ -103,35 +107,41 @@ class Menu:
             
             
     def save_image(self):
-        if self.img:
+        if self.modified_img:
             filepath = filedialog.asksaveasfilename(defaultextension=".png", filetypes=[("PNG Files", "*.png")])
             if filepath:
-                self.img.save(filepath)
+                self.modified_img.save(filepath)
                 
     def show_about(self):
         messagebox.showinfo("Sobre", "Projeto de Processamento Digital de Imagens feito na Universidade Feevale. O projeto foi feito utilizando a linguagem Python com Tkinter e Pillow.")
     
     #Para mostrar a imagem na Window do Tkinter
     def display_image(self):
-        img_tk = ImageTk.PhotoImage(self.img)
-        self.label_img.config(image=img_tk)
-        self.label_img.image = img_tk
+        if self.original_img:
+            original_tk = ImageTk.PhotoImage(self.original_img)
+            self.original_img_label.config(image=original_tk)
+            self.original_img_label.image = original_tk
+            
+        if self.modified_img:
+            modified_tk = ImageTk.PhotoImage(self.modified_img)
+            self.modified_img_label.config(image=modified_tk)
+            self.modified_img_label.image = modified_tk
     
     def quit_app(self):
         self.root.quit()
         
     def translate(self):
-        if not self.img:
+        if not self.modified_img:
             messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
             return
 
-        x_translation = simpledialog.askinteger("Translação", "Digite o deslocamento em X:", minvalue=-self.img.width, maxvalue=self.img.width)
-        y_translation = simpledialog.askinteger("Translação", "Digite o deslocamento em Y:", minvalue=-self.img.height, maxvalue=self.img.height)
+        x_translation = simpledialog.askinteger("Translação", "Digite o deslocamento em X:", minvalue=-self.modified_img.width, maxvalue=self.modified_img.width)
+        y_translation = simpledialog.askinteger("Translação", "Digite o deslocamento em Y:", minvalue=-self.modified_img.height, maxvalue=self.modified_img.height)
 
         if x_translation is not None and y_translation is not None:
             print(f"Translação em X: {x_translation}, Y: {y_translation}")
-            translation = Translation(self.img)
-            self.img = translation.translate(x_translation, y_translation)
+            translation = Translation(self.modified_img)
+            self.modified_img = translation.translate(x_translation, y_translation)
             self.display_image()
             print("Concluído translação")
         
@@ -139,7 +149,7 @@ class Menu:
     def rotate(self):
         print("Rotação...")
         
-        if not self.img:
+        if not self.modified_img:
             messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
             return
         
@@ -147,29 +157,29 @@ class Menu:
         
         if angle is not None:
             print(f"Rotacionando em {angle} graus...")
-            rotation = Rotation(self.img)
-            self.img = rotation.rotate(angle)
+            rotation = Rotation(self.modified_img)
+            self.modified_img = rotation.rotate(angle)
             self.display_image()
             print("Concluído rotação")
 
     def mirror(self):
         print("Espelhamento...")
         
-        if not self.img:
+        if not self.modified_img:
             messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
             return
         
         # Pergunta ao usuário se deseja espelhamento vertical
         answer = messagebox.askyesno("Tipo de Espelhamento", "Você deseja aplicar espelhamento vertical? \n('Sim' para Espelhamento Vertical, 'Não' para Espelhamento Horizontal)")
         
-        mirror = Mirror(self.img)
-        self.img = mirror.mirror(answer)
+        mirror = Mirror(self.modified_img)
+        self.modified_img = mirror.mirror(answer)
         self.display_image()
         
         print("Concluído espelhamento")
 
     def zoom_in(self):
-        if not self.img:
+        if not self.modified_img:
             messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
             return
 
@@ -177,13 +187,13 @@ class Menu:
 
         if scaling_factor:
             print(f"Aumentando com fator {scaling_factor}...")
-            scale = Scale(self.img)
-            self.img = scale.zoom(scaling_factor)
+            scale = Scale(self.modified_img)
+            self.modified_img = scale.zoom(scaling_factor)
             self.display_image()
             print("Concluído aumentar")
 
     def zoom_out(self):
-        if not self.img:
+        if not self.modified_img:
             messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
             return
 
@@ -191,22 +201,22 @@ class Menu:
 
         if factor:
             print(f"Diminuindo com fator {factor}...")
-            scale = Scale(self.img)
-            self.img = scale.zoom(factor)
+            scale = Scale(self.modified_img)
+            self.modified_img = scale.zoom(factor)
             self.display_image()
             print("Concluído diminuir")
         
     def grayscale(self):
         print("Grayscale...")
         
-        grayscale = Grayscale(self.img)
-        self.img = grayscale.grayscale()
+        grayscale = Grayscale(self.modified_img)
+        self.modified_img = grayscale.grayscale()
         self.display_image()
         
         print("Concluído grayscale")
         
     def brightness(self):
-        if not self.img:
+        if not self.modified_img:
             messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
             return
 
@@ -215,16 +225,16 @@ class Menu:
 
         if brightness_value is not None and contrast_value is not None:
             print(f"Aplicando brilho {brightness_value} e contraste {contrast_value}")
-            brightness = Brightness(self.img)
-            self.img = brightness.brightness(brightness=brightness_value, contrast=contrast_value)
+            brightness = Brightness(self.modified_img)
+            self.modified_img = brightness.brightness(brightness=brightness_value, contrast=contrast_value)
             self.display_image()
             print("Concluído brilho e contraste")
         
     def low_pass(self):
         print("Passa baixa...")
         
-        lowPass = LowPass(self.img)
-        self.img = lowPass.low_pass()
+        lowPass = LowPass(self.modified_img)
+        self.modified_img = lowPass.low_pass()
         self.display_image()
         
         print("Concluído Passa Baixa")
@@ -232,19 +242,19 @@ class Menu:
     def high_pass(self):
         print("Passa alta...")
         
-        highPass = HighPass(self.img)
-        self.img = highPass.high_pass()
+        highPass = HighPass(self.modified_img)
+        self.modified_img = highPass.high_pass()
         self.display_image()
         
         print("Concluído Passa Alta (Sobel)")
         
     def threshold(self):
-        if self.img:
+        if self.modified_img:
             value = simpledialog.askinteger("Threshold", "Digite o valor do threshold (0 a 255):", minvalue=0, maxvalue=255)
             if value is not None:
                 print(f"Aplicando Threshold com valor {value}...")
-                threshold_filter = Threshold(self.img)
-                self.img = threshold_filter.threshold(value)
+                threshold_filter = Threshold(self.modified_img)
+                self.modified_img = threshold_filter.threshold(value)
                 self.display_image()
                 print("Concluído Threshold")
         
@@ -264,5 +274,9 @@ class Menu:
         print("Desafio...")
         
     def showOriginalImage(self):
-        #Para concluir aqui, tenho que mudar a lógica da classe Menu quando eu for adicionar as duas imagens juntas
-        print("Imagem original setada com sucesso")
+        if self.original_img:
+            self.modified_img = self.original_img.copy()
+            self.display_image()
+            print("Imagem original setada com sucesso")
+        else:
+            messagebox.showwarning("Aviso!!!", "Nenhuma imagem foi carregada.")
