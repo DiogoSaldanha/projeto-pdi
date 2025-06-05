@@ -206,13 +206,19 @@ class Menu:
         print("Concluído grayscale")
         
     def brightness(self):
-        print("Brilho...")
-        
-        brightness = Brightness(self.img)
-        self.img = brightness.brightness()
-        self.display_image()
-        
-        print("Concluído brilho e contraste")
+        if not self.img:
+            messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
+            return
+
+        brightness_value = simpledialog.askinteger("Brilho", "Digite o valor de brilho (-255 a 255):", minvalue=-255, maxvalue=255)
+        contrast_value = simpledialog.askfloat("Contraste", "Digite o valor de contraste (Para diminuir, valores entre 0 e 1. Para aumentar, entre 1 e 5. Ex: 1.0 = normal):", minvalue=0.0, maxvalue=5.0)
+
+        if brightness_value is not None and contrast_value is not None:
+            print(f"Aplicando brilho {brightness_value} e contraste {contrast_value}")
+            brightness = Brightness(self.img)
+            self.img = brightness.brightness(brightness=brightness_value, contrast=contrast_value)
+            self.display_image()
+            print("Concluído brilho e contraste")
         
     def low_pass(self):
         print("Passa baixa...")

@@ -5,16 +5,14 @@ class Brightness:
         self.image = image
         self.modifiedImage = ImageProcessor(image)
         
-    def brightness(self):
+    #Para diminuir o constraste, apenas valores entre 0 e 1. Aumentar maior que 1
+    #Aumentar ou diminuir contraste (0 não muda nada)
+    def brightness(self, brightness=0, contrast=1.0):
         pixels = self.modifiedImage.get_pixels()
         width = self.image.width
         height = self.image.height
         modifiedPixels = []
-        
-        #Aplicando valores de contraste e brilho para testes
-        contrast = 1.5 #Para diminuir o constraste, apenas valores entre 0 e 1. Aumentar maior que 1
-        brightness = 0 #Aumentar ou diminuir contraste (0 não muda nada)
-        
+      
         # Para ajudar no cálculo do contraste
         translationValue = 128 * (1 - contrast)
         
