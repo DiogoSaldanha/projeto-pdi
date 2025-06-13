@@ -294,11 +294,51 @@ class Menu:
 
         print("Concluído erosão")
         
+    # É uma operação composta, não precisa de implementação específica -> remove ruídos pequenos isolados
     def opening(self):
         print("Abertura...")
         
+        if not self.modified_img:
+            messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
+            return
+
+        # Passo 1: converter para tons de cinza
+        # grayscale = Grayscale(self.modified_img)
+        # self.modified_img = grayscale.grayscale()
+
+        # Passo 2: aplicar erosão
+        erosion = Erosion(self.modified_img)
+        eroded_img = erosion.erode()
+
+        # Passo 3: aplicar dilatação após erosão
+        dilation = Dilatation(eroded_img)
+        self.modified_img = dilation.dilate()
+
+        self.display_image()
+        print("Concluído Abertura")
+        
+    # É uma operação composta, não precisa de implementação específica -> preenche buracos ou falhas em objetos grandes
     def closing(self):
         print("Fechamento...")
+
+        if not self.modified_img:
+            messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
+            return
+
+        # Passo 1: converter para tons de cinza
+        # grayscale = Grayscale(self.modified_img)
+        # self.modified_img = grayscale.grayscale()
+
+        # Passo 2: aplicar dilatação
+        dilation = Dilatation(self.modified_img)
+        dilated_img = dilation.dilate()
+
+        # Passo 3: aplicar erosão depois da dilatação
+        erosion = Erosion(dilated_img)
+        self.modified_img = erosion.erode()
+
+        self.display_image()
+        print("Concluído Fechamento")
         
     def challenge(self):
         print("Desafio...")
