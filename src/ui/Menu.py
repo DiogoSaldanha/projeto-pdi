@@ -12,6 +12,7 @@ from utils.Filters.LowPass import LowPass
 from utils.Filters.HighPass import HighPass
 from utils.Filters.Threshold import Threshold
 from utils.MathematicalMorphology.Dilatation import Dilatation
+from utils.MathematicalMorphology.Erosion import Erosion
 
 class Menu:
     def __init__(self, root):
@@ -278,6 +279,20 @@ class Menu:
     
     def erosion(self):
         print("Erosão...")
+
+        if not self.modified_img:
+            messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
+            return
+
+        # Aplica grayscale automaticamente antes da dilatação
+        #grayscale = Grayscale(self.modified_img)
+        #self.modified_img = grayscale.grayscale()
+
+        erosion = Erosion(self.modified_img)
+        self.modified_img = erosion.erode()
+        self.display_image()
+
+        print("Concluído erosão")
         
     def opening(self):
         print("Abertura...")
