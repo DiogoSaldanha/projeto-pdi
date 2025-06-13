@@ -11,6 +11,7 @@ from utils.Filters.Brightness import Brightness
 from utils.Filters.LowPass import LowPass
 from utils.Filters.HighPass import HighPass
 from utils.Filters.Threshold import Threshold
+from utils.MathematicalMorphology.Dilatation import Dilatation
 
 class Menu:
     def __init__(self, root):
@@ -82,8 +83,8 @@ class Menu:
         self.modified_img_label.pack(side=tk.RIGHT, padx=20)
         
     def open_image(self):
-        filepath = filedialog.askopenfilename(filetypes=[("Image Files", "*.png;*.jpg;*.jpeg;*.bmp")])
-        #filepath = filedialog.askopenfilename()
+        filepath = filedialog.askopenfilename(filetypes=[("Image Files", "*.png;*.jpg;*.jpeg;*.bmp")]) #Para uso no Windows
+        #filepath = filedialog.askopenfilename() #Para uso no Linux
         
         if filepath:
             self.original_img = Image.open(filepath)
@@ -260,6 +261,20 @@ class Menu:
         
     def dilatation(self):
         print("Dilatação...")
+
+        if not self.modified_img:
+            messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
+            return
+        
+        # Aplica grayscale automaticamente antes da dilatação
+        #grayscale = Grayscale(self.modified_img)
+        #self.modified_img = grayscale.grayscale()
+
+        dilation = Dilatation(self.modified_img)
+        self.modified_img = dilation.dilate()
+        self.display_image()
+
+        print("Concluído dilatação")
     
     def erosion(self):
         print("Erosão...")
