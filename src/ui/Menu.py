@@ -88,10 +88,12 @@ class Menu:
         #filepath = filedialog.askopenfilename() #Para uso no Linux
         
         if filepath:
-            self.original_img = Image.open(filepath)
+            self.original_img = Image.open(filepath).convert("RGB") #Linha adicionada para garantir que imagens RGBA não possam ser manipuladas. Classes como Brightness e Grayscale apenas suportam RGB.
             self.original_img.thumbnail((400,400))
             self.modified_img = self.original_img.copy()
             self.display_image()
+            
+            #print(self.original_img.mode)  # Exibe se imagem é 'RGB' ou 'RGBA'
             
         #teste abaixo de imageprocessor para verificar se esta pegando pixels da imagem
         # if self.img:
