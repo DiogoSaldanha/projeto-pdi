@@ -16,7 +16,7 @@ from utils.MathematicalMorphology.Erosion import Erosion
 
 class Menu:
     def __init__(self, root):
-        #Inicializando root windows e variáveis de instância
+        #Inicializando a janela root e variáveis de instância
         self.root = root
         self.root.title("Processamento Digital de Imagens - Diogo Schaan Saldanha")
         self.root.geometry("800x700")
@@ -26,7 +26,7 @@ class Menu:
         #cria menu bar
         self.menu_bar = tk.Menu(self.root)
         
-        # Menu de Arquivo
+        #Menu de Arquivo
         file_menu = tk.Menu(self.menu_bar, tearoff=0)
         file_menu.add_command(label="Abrir Imagem", command=self.open_image)
         file_menu.add_command(label="Salvar Imagem", command=self.save_image)
@@ -35,7 +35,7 @@ class Menu:
         self.menu_bar.add_cascade(label="Arquivo", menu=file_menu)
         
         
-        # Menu de Transofrmações Geométricas
+        #Menu de Transformações Geométricas
         geom_menu = tk.Menu(self.menu_bar, tearoff=0)
         geom_menu.add_command(label="Transladar", command=self.translate)
         geom_menu.add_command(label="Rotacionar", command=self.rotate)
@@ -78,7 +78,7 @@ class Menu:
         
         #Área pra mostrar a imagem, estudar melhor label pra centralizar dps etc
         self.original_img_label = tk.Label(self.root)
-        self.original_img_label.pack(side=tk.LEFT, padx=20) #Não sei se o pady pode atrapalhar o display da imagem pós algoritmos
+        self.original_img_label.pack(side=tk.LEFT, padx=20)
         
         self.modified_img_label = tk.Label(self.root)
         self.modified_img_label.pack(side=tk.RIGHT, padx=20)
@@ -286,7 +286,7 @@ class Menu:
             messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
             return
 
-        # Aplica grayscale automaticamente antes da dilatação
+        # Aplica grayscale automaticamente antes da erosão
         #grayscale = Grayscale(self.modified_img)
         #self.modified_img = grayscale.grayscale()
 
@@ -304,15 +304,15 @@ class Menu:
             messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
             return
 
-        # Passo 1: converter para tons de cinza
+        # Passo 1: converte automaticamente para tons de cinza
         # grayscale = Grayscale(self.modified_img)
         # self.modified_img = grayscale.grayscale()
 
-        # Passo 2: aplicar erosão
+        # Passo 2: aplica erosão
         erosion = Erosion(self.modified_img)
         eroded_img = erosion.erode()
 
-        # Passo 3: aplicar dilatação após erosão
+        # Passo 3: aplica dilatação após erosão
         dilation = Dilatation(eroded_img)
         self.modified_img = dilation.dilate()
 
@@ -327,15 +327,15 @@ class Menu:
             messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
             return
 
-        # Passo 1: converter para tons de cinza
+        # Passo 1: converte automaticamente para tons de cinza
         # grayscale = Grayscale(self.modified_img)
         # self.modified_img = grayscale.grayscale()
 
-        # Passo 2: aplicar dilatação
+        # Passo 2: aplica dilatação
         dilation = Dilatation(self.modified_img)
         dilated_img = dilation.dilate()
 
-        # Passo 3: aplicar erosão depois da dilatação
+        # Passo 3: aplica erosão depois da dilatação
         erosion = Erosion(dilated_img)
         self.modified_img = erosion.erode()
 
