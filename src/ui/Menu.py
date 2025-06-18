@@ -20,15 +20,25 @@ class Menu:
         #Inicializando a janela root e variáveis de instância
         self.root = root
         self.root.title("Processamento Digital de Imagens - Diogo Schaan Saldanha")
-        self.root.geometry("800x700")
+        self.root.geometry("1000x650")
         self.original_img = None
         self.modified_img = None
         
+        #Cores da paleta
+        self.background_color = "#2c3e50"
+        self.menu_background = "#1a252f"
+        self.menu_fg = "#ecf0f1"
+        self.highlight_color = "#5dade2"
+        self.label_background = "#34495e"
+        
+        # Configura a cor de fundo do menu
+        self.root.configure(bg=self.background_color)
+        
         #cria menu bar
-        self.menu_bar = tk.Menu(self.root)
+        self.menu_bar = tk.Menu(self.root, bg=self.menu_background, fg=self.menu_fg, activebackground=self.highlight_color, activeforeground=self.menu_fg, font=("Lucida Console", 10, "bold"))
         
         #Menu de Arquivo
-        file_menu = tk.Menu(self.menu_bar, tearoff=0)
+        file_menu = tk.Menu(self.menu_bar, tearoff=0, bg=self.menu_background, fg=self.menu_fg, font=("Helvetica", 10))
         file_menu.add_command(label="Abrir Imagem", command=self.open_image)
         file_menu.add_command(label="Salvar Imagem", command=self.save_image)
         file_menu.add_command(label="Sobre", command=self.show_about)
@@ -37,7 +47,7 @@ class Menu:
         
         
         #Menu de Transformações Geométricas
-        geom_menu = tk.Menu(self.menu_bar, tearoff=0)
+        geom_menu = tk.Menu(self.menu_bar, tearoff=0, bg=self.menu_background, fg=self.menu_fg, font=("Helvetica", 10))
         geom_menu.add_command(label="Transladar", command=self.translate)
         geom_menu.add_command(label="Rotacionar", command=self.rotate)
         geom_menu.add_command(label="Espelhar", command=self.mirror)
@@ -46,7 +56,7 @@ class Menu:
         self.menu_bar.add_cascade(label="Transformações Geométricas", menu=geom_menu)
         
         #Menu de Filtros
-        filter_menu = tk.Menu(self.menu_bar, tearoff=0)
+        filter_menu = tk.Menu(self.menu_bar, tearoff=0, bg=self.menu_background, fg=self.menu_fg, font=("Helvetica", 10))
         filter_menu.add_command(label="Grayscale", command=self.grayscale)
         filter_menu.add_command(label="Brilho", command=self.brightness)
         filter_menu.add_command(label="Passa Baixa", command=self.low_pass)
@@ -56,7 +66,7 @@ class Menu:
         
         
         #Menu de Morfologia Matemática
-        morph_menu = tk.Menu(self.menu_bar, tearoff=0)
+        morph_menu = tk.Menu(self.menu_bar, tearoff=0, bg=self.menu_background, fg=self.menu_fg, font=("Helvetica", 10))
         morph_menu.add_command(label="Dilatação", command=self.dilatation)
         morph_menu.add_command(label="Erosão", command=self.erosion)
         morph_menu.add_command(label="Abertura", command=self.opening)
@@ -65,25 +75,28 @@ class Menu:
         
         
         #Menu de Extração de Características
-        extraction_menu = tk.Menu(self.menu_bar, tearoff=0)
+        extraction_menu = tk.Menu(self.menu_bar, tearoff=0, bg=self.menu_background, fg=self.menu_fg, font=("Helvetica", 10))
         extraction_menu.add_command(label="DESAFIO", command=self.challenge)
         self.menu_bar.add_cascade(label="Extração de Características", menu=extraction_menu)
         
         #Opção voltar imagem original
-        original_image_menu = tk.Menu(self.menu_bar,tearoff=0)
+        original_image_menu = tk.Menu(self.menu_bar, tearoff=0, bg=self.menu_background, fg=self.menu_fg, font=("Helvetica", 10))
         original_image_menu.add_command(label="Voltar à Imagem Original", command=self.showOriginalImage)
         self.menu_bar.add_cascade(label="Voltar à Imagem Original", menu=original_image_menu)
         
         #Setando o menu bar pra root window
         self.root.config(menu=self.menu_bar)
         
-        #Área pra mostrar a imagem, estudar melhor label pra centralizar dps etc
-        self.original_img_label = tk.Label(self.root)
-        self.original_img_label.pack(side=tk.LEFT, padx=20)
-        
-        self.modified_img_label = tk.Label(self.root)
-        self.modified_img_label.pack(side=tk.RIGHT, padx=20)
-        
+        # Frame para as imagens (com espaçamento uniforme agora)
+        img_frame = tk.Frame(self.root, bg=self.background_color)
+        img_frame.pack(pady=150)
+
+        self.original_img_label = tk.Label(img_frame, bg=self.label_background)
+        self.original_img_label.pack(side=tk.LEFT, padx=40)
+
+        self.modified_img_label = tk.Label(img_frame, bg=self.label_background)
+        self.modified_img_label.pack(side=tk.RIGHT, padx=40)
+ 
     def open_image(self):
         filepath = filedialog.askopenfilename(filetypes=[("Image Files", "*.png;*.jpg;*.jpeg;*.bmp")]) #Para uso no Windows
         #filepath = filedialog.askopenfilename() #Para uso no Linux
