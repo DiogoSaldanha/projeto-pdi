@@ -13,6 +13,7 @@ from utils.Filters.HighPass import HighPass
 from utils.Filters.Threshold import Threshold
 from utils.MathematicalMorphology.Dilatation import Dilatation
 from utils.MathematicalMorphology.Erosion import Erosion
+from utils.Challenge.Challenge import Challenge
 
 class Menu:
     def __init__(self, root):
@@ -343,6 +344,15 @@ class Menu:
         print("Concluído Fechamento")
         
     def challenge(self):
+        if not self.modified_img:
+            messagebox.showwarning("Aviso", "Nenhuma imagem carregada.")
+            return
+
+        analyzer = Challenge(self.modified_img)
+        total, round_pills, capsules, broken_pills = analyzer.analyze()
+
+        messagebox.showinfo("Resultado",
+            f"Total de comprimidos: {total}\nRedondos: {round_pills}\nCápsulas: {capsules}\nComprimidos quebrados: {broken_pills}")
         print("Desafio...")
         
     def showOriginalImage(self):
